@@ -4,6 +4,7 @@ import ErrorHandler from "../utils/error.handler.js";
 import sendToken from "../utils/send.token.js";
 import validator from "validator";
 import jwt from "jsonwebtoken";
+import { upload_file } from "../utils/cloudinary.js";
 const register = catchAsyncError(async (req, res, next) => {
   const { name, email, picture, status, password } = req.body;
 
@@ -37,7 +38,27 @@ const register = catchAsyncError(async (req, res, next) => {
     return next(new ErrorHandler("Email already exists", 400));
   }
 
-  const newUser = await User.create({ name, email, picture, status, password });
+  let pictureData = "";
+  if (picture) {
+    try {
+      const cloudinaryResponse = await upload_file(picture, "whatsapp");
+      pictureData = {
+        public_id: cloudinaryResponse.public_id,
+        url: cloudinaryResponse.url,
+      };
+      console.log("🚀 ~ register ~ pictureData:", pictureData);
+    } catch (error) {
+      return next(new ErrorHandler("Error uploading image to Cloudinary", 500));
+    }
+  }
+
+  const newUser = await User.create({
+    name,
+    email,
+    picture: pictureData || undefined,
+    status,
+    password,
+  });
 
   sendToken(newUser, 201, res);
 });

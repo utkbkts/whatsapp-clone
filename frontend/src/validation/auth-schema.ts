@@ -18,6 +18,13 @@ export const registerSchema = z.object({
   name: requiredStringName,
   email: z.string({ required_error: "required" }).email(),
   password: requiredStringPassword,
+  status: z
+    .string()
+    .regex(/^[A-Za-z0-9@?!#%çÇğĞıİöÖşŞüÜ^"\s]*$/, {
+      message: "Invalid characters in status",
+    })
+    .optional(),
+  picture: z.instanceof(File).optional(),
 });
 
 export type RegisterFormData = z.infer<typeof registerSchema>;
