@@ -5,7 +5,7 @@ import React from "react";
 const App = () => {
   return (
     <React.Fragment>
-      <div>
+      <div className="dark">
         <RouterProvider router={router} />
       </div>
     </React.Fragment>
