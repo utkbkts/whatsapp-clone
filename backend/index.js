@@ -13,6 +13,8 @@ import { ConnectedDatabase } from "./db/connected.mongodb.js";
 
 //ROUTES
 import authRoutes from "./routes/auth.routes.js";
+import conversationRoutes from "./routes/conversation.routes.js";
+import messagesRoutes from "./routes/messages.routes.js";
 //path
 const __dirname = path.resolve();
 //dotEnv config
@@ -61,6 +63,8 @@ app.use(
 
 //api v1 routes
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/conversation", conversationRoutes);
+app.use("/api/v1/messages", messagesRoutes);
 
 app.use(errorMiddleware);
 

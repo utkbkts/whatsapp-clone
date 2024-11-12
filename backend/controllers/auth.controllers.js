@@ -57,6 +57,7 @@ const register = catchAsyncError(async (req, res, next) => {
     email,
     picture: pictureData || undefined,
     status,
+    password,
   });
 
   sendToken(newUser, 201, res);
