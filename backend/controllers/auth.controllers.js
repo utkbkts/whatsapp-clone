@@ -1,5 +1,5 @@
 import catchAsyncError from "../middlewares/catch.middleware.js";
-import User from "../models/userModel.js";
+import User from "../models/user.model.js";
 import ErrorHandler from "../utils/error.handler.js";
 import sendToken from "../utils/send.token.js";
 import validator from "validator";
@@ -57,7 +57,6 @@ const register = catchAsyncError(async (req, res, next) => {
     email,
     picture: pictureData || undefined,
     status,
-    password,
   });
 
   sendToken(newUser, 201, res);
@@ -80,7 +79,8 @@ const login = catchAsyncError(async (req, res, next) => {
 });
 
 const logout = catchAsyncError(async (req, res, next) => {
-  res.clearCookie("refreshtoken", { path: "/api/v1/auth/refreshtoken" });
+  res.clearCookie("accessToken");
+  res.clearCookie("refreshToken");
   return res.status(200).json({ message: "Logged out successfully" });
 });
 
@@ -106,13 +106,29 @@ const refreshToken = catchAsyncError(async (req, res, next) => {
   }
 
   const newAccessToken = jwt.sign(
-    { userId: user._id },
+    { userId: decoded.userId },
     process.env.ACCESS_TOKEN_SECRET,
-    { expiresIn: "1h" }
+    { expiresIn: "15m" }
   );
 
-  res.cookie("accesstoken", newAccessToken, { httpOnly: true, secure: true });
+  res.cookie("accesstoken", newAccessToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+    maxAge: 15 * 60 * 1000,
+  });
   res.status(200).json({ message: "Access token refreshed" });
 });
 
-export default { register, login, logout, refreshToken };
+const getUser = catchAsyncError(async (req, res, next) => {
+  const user = await User.findById(req.user._id);
+  if (!user) {
+    return next(new ErrorHandler("User not found", 404));
+  }
+
+  return res.status(200).json({
+    user,
+  });
+});
+
+export default { register, login, logout, refreshToken, getUser };

@@ -1,6 +1,7 @@
 import Loading from "@/components/Loading";
 import NotFound from "@/components/NotFound";
 import MainLayout from "@/layouts/MainLayout";
+import Login from "@/pages/auth/Login";
 import Register from "@/pages/auth/Register";
 import HomePage from "@/pages/home/HomePage";
 import { Suspense } from "react";
@@ -23,6 +24,14 @@ export const MainRoutes = {
       element: (
         <Suspense fallback={<Loading />}>
           <Register />
+        </Suspense>
+      ),
+    },
+    {
+      path: "login",
+      element: (
+        <Suspense fallback={<Loading />}>
+          <Login />
         </Suspense>
       ),
     },
