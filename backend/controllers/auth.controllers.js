@@ -94,4 +94,24 @@ const getUser = catchAsyncError(async (req, res, next) => {
   });
 });
 
-export default { register, login, logout, getUser };
+const searchUsers = catchAsyncError(async (req, res, next) => {
+  const keyword = req.query.user?.toString().trim();
+  console.log("🚀 ~ searchUsers ~ keyword:", keyword);
+
+  if (!keyword) {
+    return res.status(400).json({ message: "Lütfen bir arama terimi girin." });
+  }
+
+  const regex = new RegExp(keyword, "i");
+  const users = await User.find({
+    $or: [{ name: { $regex: regex } }, { email: { $regex: regex } }],
+  });
+
+  return res.status(200).json({
+    success: true,
+    results: users.length,
+    users,
+  });
+});
+
+export default { register, login, logout, getUser, searchUsers };

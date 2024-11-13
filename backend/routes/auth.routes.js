@@ -12,4 +12,6 @@ routes.post("/logout", authControllers.logout);
 
 routes.get("/getUser", isAuthenticatedUser, authControllers.getUser);
 
+routes.get("/search", isAuthenticatedUser, authControllers.searchUsers);
+
 export default routes;
