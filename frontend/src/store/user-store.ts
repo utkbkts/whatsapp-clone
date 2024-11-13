@@ -11,25 +11,24 @@ interface UserStoreType {
   signup: (data: SignupType) => Promise<void>;
   signIn: (data: SignupType) => Promise<void>;
   logout: () => void;
-  refreshToken: () => Promise<void>;
   getUser: () => Promise<void>;
 }
 
-export const useUserStore = create<UserStoreType>((set, get) => ({
+export const useUserStore = create<UserStoreType>((set) => ({
   user: null,
   loading: false,
   checkingAuth: true,
 
-  signup: async ({ name, email, password, picture, status }: SignupType) => {
+  signup: async ({ user }: SignupType) => {
     set({ loading: true });
 
     try {
       const promiseFunction = axios.post("/auth/register", {
-        name,
-        email,
-        password,
-        picture,
-        status,
+        name: user?.name,
+        email: user?.email,
+        password: user?.password,
+        picture: user?.picture,
+        status: user?.status,
       });
 
       const res = await promiseFunction;
@@ -48,13 +47,13 @@ export const useUserStore = create<UserStoreType>((set, get) => ({
     }
   },
 
-  signIn: async ({ email, password }: SignupType) => {
+  signIn: async ({ user }: SignupType) => {
     set({ loading: true });
 
     try {
       const promiseFunction = axios.post("/auth/login", {
-        email,
-        password,
+        email: user?.email,
+        password: user?.password,
       });
 
       const res = await promiseFunction;
@@ -73,7 +72,6 @@ export const useUserStore = create<UserStoreType>((set, get) => ({
     }
   },
 
-  // Yeni eklenen logout fonksiyonu
   logout: async () => {
     set({ loading: true });
 
@@ -97,52 +95,6 @@ export const useUserStore = create<UserStoreType>((set, get) => ({
       set({ user: response.data, checkingAuth: false });
     } catch (error: any) {
       set({ checkingAuth: false, user: null });
-      console.log(error.response.data.message);
-    }
-  },
-
-  // Yeni eklenen refreshToken fonksiyonu
-  refreshToken: async () => {
-    if (get().checkingAuth) return;
-
-    set({ checkingAuth: true });
-
-    try {
-      const response = await axios.post("/auth/refreshtoken");
-      set({ checkingAuth: false });
-      return response.data;
-    } catch (error: any) {
-      set({ user: null, checkingAuth: false });
-      throw error;
     }
   },
 }));
-
-let refreshPromise: any = null;
-
-axios.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    const originalRequest = error.config;
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-
-      try {
-        if (refreshPromise) {
-          await refreshPromise;
-          return axios(originalRequest);
-        }
-
-        refreshPromise = useUserStore.getState().refreshToken();
-        await refreshPromise;
-        refreshPromise = null;
-
-        return axios(originalRequest);
-      } catch (refreshError) {
-        useUserStore.getState().logout();
-        return Promise.reject(refreshError);
-      }
-    }
-    return Promise.reject(error);
-  }
-);

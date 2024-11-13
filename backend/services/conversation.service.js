@@ -58,7 +58,6 @@ export const doesConversationExist = async (
 export const createConversationData = async (data) => {
   try {
     const newConvo = await Conversation.create(data);
-    console.log("🚀 ~ createConversationData ~ newConvo:", newConvo);
     if (!newConvo) throw new Error("Something went wrong!");
     return newConvo;
   } catch (error) {

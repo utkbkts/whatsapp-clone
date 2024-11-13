@@ -10,8 +10,6 @@ routes.post("/login", authControllers.login);
 
 routes.post("/logout", authControllers.logout);
 
-routes.post("/refreshtoken", authControllers.refreshToken);
-
 routes.get("/getUser", isAuthenticatedUser, authControllers.getUser);
 
 export default routes;

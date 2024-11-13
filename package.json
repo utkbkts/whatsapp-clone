@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon --experimental-specifier-resolution=node backend/index.js",
     "start": "node backend/index.js",
+    "seeder": "node backend/seeder/seeder.js",
     "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
   },
   "keywords": [],

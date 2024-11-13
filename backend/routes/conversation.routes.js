@@ -10,7 +10,7 @@ router.post(
   conversationControllers.createConversation
 );
 router.get(
-  "/getConver",
+  "/getConversation",
   isAuthenticatedUser,
   conversationControllers.getConversations
 );

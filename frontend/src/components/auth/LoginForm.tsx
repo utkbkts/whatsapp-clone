@@ -21,8 +21,7 @@ const LoginForm = () => {
   });
 
   const onSubmit = async (data: LoginFormData) => {
-    console.log("🚀 ~ onSubmit ~ data:", data);
-    await signIn(data);
+    await signIn({ user: data });
   };
   return (
     <div className="h-screen w-full flex items-center justify-center overflow-hidden">

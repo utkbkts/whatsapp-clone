@@ -27,7 +27,11 @@ const RegisterForm = () => {
   });
 
   const onSubmit = async (data: RegisterFormData) => {
-    await signup({ ...data, picture });
+    const user = {
+      ...data,
+      picture,
+    };
+    await signup({ user });
   };
   return (
     <div className="h-screen w-full flex items-center justify-center overflow-hidden">

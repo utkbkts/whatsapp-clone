@@ -46,7 +46,6 @@ const register = catchAsyncError(async (req, res, next) => {
         public_id: cloudinaryResponse.public_id,
         url: cloudinaryResponse.url,
       };
-      console.log("🚀 ~ register ~ pictureData:", pictureData);
     } catch (error) {
       return next(new ErrorHandler("Error uploading image to Cloudinary", 500));
     }
@@ -69,60 +68,23 @@ const login = catchAsyncError(async (req, res, next) => {
   const user = await User.findOne({ email }).select("+password");
 
   if (!user) {
-    return next(new ErrorHandler("Invalid email or password", 401));
+    return next(new ErrorHandler("Invalid email ", 401));
   }
   const isPasswordMatched = await user.comparePassword(password);
 
   if (!isPasswordMatched) {
-    return next(new ErrorHandler("Invalid email or password", 401));
+    return next(new ErrorHandler("Invalid password", 401));
   }
   sendToken(user, 200, res);
 });
 
 const logout = catchAsyncError(async (req, res, next) => {
   res.clearCookie("accessToken");
-  res.clearCookie("refreshToken");
   return res.status(200).json({ message: "Logged out successfully" });
 });
 
-const refreshToken = catchAsyncError(async (req, res, next) => {
-  const refresh_token = req.cookies.refreshtoken;
-
-  if (!refresh_token) {
-    return next(new ErrorHandler("please login", 401));
-  }
-
-  // Refresh token'ı doğrulama
-  const decoded = jwt.verify(refresh_token, process.env.REFRESH_TOKEN_SECRET);
-
-  if (!decoded) {
-    return next(new ErrorHandler("Invalid refresh token", 401));
-  }
-
-  // Kullanıcıyı bulma
-  const user = await User.findById(decoded.userId);
-
-  if (!user) {
-    return next(new ErrorHandler("User not found", 404));
-  }
-
-  const newAccessToken = jwt.sign(
-    { userId: decoded.userId },
-    process.env.ACCESS_TOKEN_SECRET,
-    { expiresIn: "15m" }
-  );
-
-  res.cookie("accesstoken", newAccessToken, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
-    maxAge: 15 * 60 * 1000,
-  });
-  res.status(200).json({ message: "Access token refreshed" });
-});
-
 const getUser = catchAsyncError(async (req, res, next) => {
-  const user = await User.findById(req.user._id);
+  const user = await User.findById(req?.user?._id);
   if (!user) {
     return next(new ErrorHandler("User not found", 404));
   }
@@ -132,4 +94,4 @@ const getUser = catchAsyncError(async (req, res, next) => {
   });
 });
 
-export default { register, login, logout, refreshToken, getUser };
+export default { register, login, logout, getUser };

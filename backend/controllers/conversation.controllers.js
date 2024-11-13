@@ -1,5 +1,6 @@
 import catchAsyncError from "../middlewares/catch.middleware.js";
 import Conversation from "../models/conversation.model.js";
+import User from "../models/user.model.js";
 import {
   createConversationData,
   doesConversationExist,
@@ -29,9 +30,10 @@ const createConversation = catchAsyncError(async (req, res, next) => {
     if (existed_conversation) {
       res.json(existed_conversation);
     } else {
+      let receiver_user = await User.findById(receiver_id);
       let convoData = {
-        name: "conversation name",
-        picture: "conversation picture",
+        name: receiver_user.name,
+        picture: receiver_id.picture,
         isGroup: false,
         users: [sender_id, receiver_id],
       };

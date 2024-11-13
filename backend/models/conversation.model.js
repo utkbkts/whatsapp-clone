@@ -12,6 +12,14 @@ const conversationSchema = mongoose.Schema(
       required: true,
       default: false,
     },
+    picture: {
+      public_id: { type: String },
+      url: {
+        type: String,
+        default:
+          "https://res.cloudinary.com/dkd5jblv5/image/upload/v1675976806/Default_ProfilePicture_gjngnb.png",
+      },
+    },
     users: [
       {
         type: mongoose.Schema.Types.ObjectId,

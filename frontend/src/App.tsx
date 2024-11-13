@@ -6,12 +6,10 @@ import { useUserStore } from "./store/user-store";
 import Loading from "./components/Loading";
 
 const App = () => {
-  const { user, getUser, checkingAuth } = useUserStore();
-
+  const { getUser, checkingAuth } = useUserStore();
   useEffect(() => {
     getUser();
-  }, [getUser]);
-  console.log("🚀 ~ App ~ user:", user);
+  }, []);
 
   if (checkingAuth) return <Loading />;
   return (
