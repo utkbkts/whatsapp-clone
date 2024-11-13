@@ -28,3 +28,9 @@ export type Conversation = {
   };
   users?: SignupType;
 };
+
+export type searchResultsType = {
+  results: number;
+  success: boolean;
+  users: SignupType[];
+};

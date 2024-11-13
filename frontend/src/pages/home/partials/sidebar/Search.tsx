@@ -7,7 +7,6 @@ import { useState } from "react";
 const Search = () => {
   const [show, setShow] = useState<boolean>(false);
   const { searchTerm, setSearchTerm, searchResults } = useConversationSearch();
-  console.log("🚀 ~ Search ~ searchResults:", searchResults);
 
   const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
