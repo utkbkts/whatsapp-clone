@@ -1,6 +1,7 @@
 import useConversationCreate from "@/hooks/useConversationCreate";
 
 const Contact = ({ contact }: any) => {
+  console.log("🚀 ~ Contact ~ contact:", contact);
   const { ConversationCreate } = useConversationCreate();
 
   const handleStartConversation = () => {

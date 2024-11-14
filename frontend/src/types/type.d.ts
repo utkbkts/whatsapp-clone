@@ -35,3 +35,15 @@ export type searchResultsType = {
   success: boolean;
   users: SignupType[];
 };
+
+export type MessagesType = {
+  conversation: {
+    picture: {
+      url: string;
+    };
+  };
+  createdAt: string;
+  message: string;
+  sender: SignupType;
+  _id: any;
+};

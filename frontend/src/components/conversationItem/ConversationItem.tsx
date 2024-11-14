@@ -16,6 +16,10 @@ const ConversationItem = ({ convo }: ConversationItemProps) => {
       receiver_id: getConversationId(user, convo.users),
       isGroup: false,
     };
+    if (!values.receiver_id) {
+      console.log("Receiver ID not found. Check the conversation data.");
+      return;
+    }
 
     ConversationCreate(values);
   };
