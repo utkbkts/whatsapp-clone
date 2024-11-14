@@ -1,12 +1,29 @@
 import { dateHandler } from "@/helpers/helpers";
+import useConversationCreate from "@/hooks/useConversationCreate";
+import { useUserStore } from "@/store/user-store";
 import { Conversation } from "@/types/type";
+import { getConversationId } from "@/utils/chat";
 interface ConversationItemProps {
   convo: Conversation;
 }
 
 const ConversationItem = ({ convo }: ConversationItemProps) => {
+  const { ConversationCreate } = useConversationCreate();
+  const { user } = useUserStore();
+
+  const handleStartConversation = () => {
+    const values = {
+      receiver_id: getConversationId(user, convo.users),
+      isGroup: false,
+    };
+
+    ConversationCreate(values);
+  };
   return (
-    <div className="list-none h-[72px] w-full dark:bg-dark_bg_1 hover:dark:bg-dark_bg_2 cursor-pointer dark:text-dark_text_1 p-2">
+    <div
+      className="list-none h-[72px] w-full dark:bg-dark_bg_1 hover:dark:bg-dark_bg_2 cursor-pointer dark:text-dark_text_1 p-2"
+      onClick={handleStartConversation}
+    >
       {/* left */}
       <div className="flex items-center gap-x-3">
         {/* conversation */}

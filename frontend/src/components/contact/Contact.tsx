@@ -1,6 +1,21 @@
+import useConversationCreate from "@/hooks/useConversationCreate";
+
 const Contact = ({ contact }: any) => {
+  const { ConversationCreate } = useConversationCreate();
+
+  const handleStartConversation = () => {
+    const values = {
+      receiver_id: contact._id,
+      isGroup: false,
+    };
+
+    ConversationCreate(values);
+  };
   return (
-    <li className="list-none h-[72px] hover:dark:bg-dark_bg_2 cursor-pointer dark:text-dark_text_2 p-1">
+    <li
+      onClick={handleStartConversation}
+      className="list-none h-[72px] hover:dark:bg-dark_bg_2 cursor-pointer dark:text-dark_text_2 p-1"
+    >
       {/* Container */}
       <div className="flex items-center gap-x-3 py-[10px]">
         {/* Contact */}

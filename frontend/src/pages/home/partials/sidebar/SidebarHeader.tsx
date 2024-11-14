@@ -7,7 +7,7 @@ import { useState } from "react";
 import Menu from "./Menu";
 const SidebarHeader = () => {
   const { user } = useUserStore();
-  const [showMenu, setShowMenu] = useState(true);
+  const [showMenu, setShowMenu] = useState(false);
   if (!user) {
     return null;
   }
