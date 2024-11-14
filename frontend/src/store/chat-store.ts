@@ -23,7 +23,6 @@ export const useChatStore = create<ChatState>((set, get) => ({
     set({ activeConversation });
   },
   setConversation: (conversations) => {
-    console.log("🚀 ~ useChatStore ~ conversations:", conversations);
     set({ conversations });
   },
 }));

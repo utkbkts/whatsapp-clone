@@ -1,11 +1,14 @@
+/* eslint-disable react-refresh/only-export-components */
+import React, { Suspense } from "react";
 import Loading from "@/components/Loading";
 import NotFound from "@/components/NotFound";
 import MainLayout from "@/layouts/MainLayout";
-import Login from "@/pages/auth/Login";
-import Register from "@/pages/auth/Register";
-import HomePage from "@/pages/home/HomePage";
-import { Suspense } from "react";
+import ProtectedRoute from "@/routes/ProtectedRoute";
+import PublicRoute from "./PublicRoute";
 
+const HomePage = React.lazy(() => import("@/pages/home/HomePage"));
+const Login = React.lazy(() => import("@/pages/auth/Login"));
+const Register = React.lazy(() => import("@/pages/auth/Register"));
 export const MainRoutes = {
   path: "/",
   element: <MainLayout />,
@@ -14,25 +17,31 @@ export const MainRoutes = {
     {
       path: "/",
       element: (
-        <Suspense fallback={<Loading />}>
-          <HomePage />
-        </Suspense>
+        <ProtectedRoute>
+          <Suspense fallback={<Loading />}>
+            <HomePage />
+          </Suspense>
+        </ProtectedRoute>
       ),
     },
     {
       path: "register",
       element: (
-        <Suspense fallback={<Loading />}>
-          <Register />
-        </Suspense>
+        <PublicRoute>
+          <Suspense fallback={<Loading />}>
+            <Register />
+          </Suspense>
+        </PublicRoute>
       ),
     },
     {
       path: "login",
       element: (
-        <Suspense fallback={<Loading />}>
-          <Login />
-        </Suspense>
+        <PublicRoute>
+          <Suspense fallback={<Loading />}>
+            <Login />
+          </Suspense>
+        </PublicRoute>
       ),
     },
   ],

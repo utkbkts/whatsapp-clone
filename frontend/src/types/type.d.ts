@@ -1,4 +1,5 @@
 export type SignupType = {
+  _id?: any;
   user: {
     _id?: any;
     name?: string;

@@ -5,7 +5,6 @@ interface ConversationItemProps {
 }
 
 const ConversationItem = ({ convo }: ConversationItemProps) => {
-  console.log("🚀 ~ ConversationItem ~ convo:", convo);
   return (
     <div className="list-none h-[72px] w-full dark:bg-dark_bg_1 hover:dark:bg-dark_bg_2 cursor-pointer dark:text-dark_text_1 p-2">
       {/* left */}

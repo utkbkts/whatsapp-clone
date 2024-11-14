@@ -105,6 +105,8 @@ const searchUsers = catchAsyncError(async (req, res, next) => {
   const regex = new RegExp(keyword, "i");
   const users = await User.find({
     $or: [{ name: { $regex: regex } }, { email: { $regex: regex } }],
+  }).find({
+    _id: { $ne: req.user._id },
   });
 
   return res.status(200).json({

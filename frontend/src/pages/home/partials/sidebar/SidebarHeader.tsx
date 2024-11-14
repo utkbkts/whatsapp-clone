@@ -3,9 +3,11 @@ import ChatIcon from "@/svg/Chat";
 import CommunityIcon from "@/svg/Community";
 import DotsIcon from "@/svg/Dots";
 import StoryIcon from "@/svg/Story";
+import { useState } from "react";
+import Menu from "./Menu";
 const SidebarHeader = () => {
   const { user } = useUserStore();
-
+  const [showMenu, setShowMenu] = useState(true);
   if (!user) {
     return null;
   }
@@ -39,10 +41,11 @@ const SidebarHeader = () => {
               <ChatIcon className="dark:fill-dark_svg_1" />
             </button>
           </li>
-          <li>
-            <button className="btn">
+          <li className="relative" onClick={() => setShowMenu((prev) => !prev)}>
+            <button className={`btn ${showMenu ? "" : ""}`}>
               <DotsIcon className="dark:fill-dark_svg_1" />
             </button>
+            {showMenu ? <Menu /> : null}
           </li>
         </ul>
       </div>

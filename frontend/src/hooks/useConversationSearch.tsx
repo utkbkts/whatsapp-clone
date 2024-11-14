@@ -1,5 +1,5 @@
 import { axios } from "@/lib/axios";
-import { searchResultsType } from "@/types/type";
+import useSearchStore from "@/store/search-store";
 import { useEffect, useState } from "react";
 
 // Debounce fonksiyonu
@@ -21,11 +21,7 @@ const useDebounce = (value: string, delay: number) => {
 
 const useConversationSearch = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [searchResults, setSearchResults] = useState<searchResultsType>({
-    results: 0,
-    success: false,
-    users: [],
-  });
+  const { setSearchResults, searchResults } = useSearchStore();
   const debouncedSearchTerm = useDebounce(searchTerm, 1000);
 
   useEffect(() => {
@@ -37,12 +33,6 @@ const useConversationSearch = () => {
           );
           const data = response.data;
           setSearchResults(data);
-        } else {
-          setSearchResults({
-            results: 0,
-            success: false,
-            users: [],
-          });
         }
       } catch (error) {
         console.error("Arama sırasında bir hata oluştu:", error);
@@ -50,9 +40,9 @@ const useConversationSearch = () => {
     };
 
     searchConversation();
-  }, [debouncedSearchTerm]);
+  }, [debouncedSearchTerm, setSearchResults]);
 
-  return { searchTerm, setSearchTerm, searchResults };
+  return { searchTerm, setSearchTerm, searchResults, setSearchResults };
 };
 
 export default useConversationSearch;
