@@ -47,8 +47,8 @@ const Search = () => {
               onKeyDown={handleSearch}
             />
           </div>
-          <button className="btn">
-            <FilterIcon className="dark:bg-dark_svg_2" />
+          <button className="btn bg-white hover:bg-white/80">
+            <FilterIcon className="dark:bg-dark_svg_2 " />
           </button>
         </div>
       </div>

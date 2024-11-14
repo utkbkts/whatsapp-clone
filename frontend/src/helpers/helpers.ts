@@ -61,3 +61,7 @@ export const dateHandler = (date: any) => {
   // Varsayılan olarak, time değişkenini döndür
   return time;
 };
+
+export const capitalize = (word: any) => {
+  return word[0].toUpperCase() + word.substring(1).toLowerCase();
+};

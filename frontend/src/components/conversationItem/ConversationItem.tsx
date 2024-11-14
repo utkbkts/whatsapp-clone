@@ -1,4 +1,4 @@
-import { dateHandler } from "@/helpers/helpers";
+import { capitalize, dateHandler } from "@/helpers/helpers";
 import useConversationCreate from "@/hooks/useConversationCreate";
 import { useUserStore } from "@/store/user-store";
 import { Conversation } from "@/types/type";
@@ -36,13 +36,19 @@ const ConversationItem = ({ convo }: ConversationItemProps) => {
         </div>
         {/* conversation name and message */}
         <div className="w-full flex flex-col">
-          <h1 className="font-bold flex items-center gap-x-2">{convo.name}</h1>
+          <h1 className="font-bold flex items-center gap-x-2">
+            {capitalize(convo?.name)}
+          </h1>
           {/* conversation message */}
           <div className="">
             <div className="flex items-center gap-x-1 dark:text-dark_text_2">
               <div className="flex-1 items-center gap-x-1 dark:text-dark_text_2 flex justify-between">
-                <p>{convo?.latestMessage?.message}</p>
-                <span>{dateHandler(convo?.latestMessage?.createdAt)}</span>
+                <p>{convo?.latestMessage?.message.substring(0, 20)}</p>
+                <span>
+                  {convo?.createdAt
+                    ? dateHandler(convo?.latestMessage?.createdAt)
+                    : null}
+                </span>
               </div>
             </div>
           </div>

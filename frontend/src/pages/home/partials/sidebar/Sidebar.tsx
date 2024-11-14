@@ -7,7 +7,6 @@ import SearchResultsItem from "@/components/searchResultsItem/SearchResultsItem"
 
 const Sidebar = () => {
   const { searchResults } = useConversationSearch();
-  console.log("🚀 ~ Sidebar ~ searchResults:", searchResults);
 
   return (
     <div className="w-[40%] h-full select-none">
