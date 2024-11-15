@@ -8,6 +8,7 @@ import React, { useRef, useState } from "react";
 import MoonLoader from "react-spinners/MoonLoader";
 const ChatActions = () => {
   const [message, setMessage] = useState("");
+
   const { activeConversation } = useChatStore();
   const { messageSend, loading } = useMessageSend();
   const textRef = useRef<HTMLInputElement>(null);
