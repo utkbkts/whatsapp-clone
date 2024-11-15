@@ -47,3 +47,8 @@ export type MessagesType = {
   sender: SignupType;
   _id: any;
 };
+
+export type OnlineUserType = {
+  socketId: string;
+  userId: string;
+};

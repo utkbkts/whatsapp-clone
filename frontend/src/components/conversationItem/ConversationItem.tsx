@@ -11,9 +11,10 @@ import {
 
 interface ConversationItemProps {
   convo: Conversation;
+  online: boolean;
 }
 
-export const ConversationItem = ({ convo }: ConversationItemProps) => {
+export const ConversationItem = ({ convo, online }: ConversationItemProps) => {
   const { ConversationCreate } = useConversationCreate();
   const { user } = useUserStore();
   const { socket } = useSocketContext();
@@ -29,7 +30,7 @@ export const ConversationItem = ({ convo }: ConversationItemProps) => {
     }
 
     if (socket) {
-      socket.emit("join conversation", values.receiver_id); // receiver_id ile odaya katılma işlemi
+      socket.emit("join conversation", values.receiver_id);
     }
 
     ConversationCreate(values);
@@ -42,7 +43,11 @@ export const ConversationItem = ({ convo }: ConversationItemProps) => {
     >
       <div className="flex items-center gap-x-3">
         {/* conversation picture */}
-        <div className="relative min-w-[50px] max-w-[50px] h-[50px] rounded-full overflow-hidden">
+        <div
+          className={`relative min-w-[50px] max-w-[50px] h-[50px] rounded-full overflow-hidden ${
+            online ? "border-2 border-[#00a884]" : ""
+          }`}
+        >
           <img
             src={getConversationPicture(user, convo.users)}
             alt={convo.name}

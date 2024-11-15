@@ -3,7 +3,7 @@ import { useChatStore } from "@/store/chat-store";
 import DotsIcon from "@/svg/Dots";
 import SearchIcon from "@/svg/Search";
 
-const ChatHeader = () => {
+const ChatHeader = ({ online }: { online: boolean }) => {
   const { activeConversation } = useChatStore();
   return (
     <div className="h-[59px] dark:bg-dark_bg_2 flex items-center p-[19px] select-none">
@@ -24,7 +24,9 @@ const ChatHeader = () => {
             <h1 className="dark:text-white text-md font-bold">
               {capitalize(activeConversation.name.split(" ")[0])}
             </h1>
-            <span className="text-xs dark:text-dark_svg_2">online</span>
+            <span className="text-xs dark:text-dark_svg_2">
+              {online ? "online" : ""}
+            </span>
           </div>
         </div>
         <ul className="flex items-center gap-x-2.5">
