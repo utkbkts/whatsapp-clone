@@ -10,7 +10,7 @@ const ChatMessages = ({ messages }: ChatMessagesProps) => {
   const { user } = useUserStore();
   return (
     <div
-      className="mb-[60px] bg-[url('https://res.cloudinary.com/dmhcnhtng/image/upload/v1677358270/Untitled-1_copy_rpx8yb.jpg')]
+      className=" bg-[url('https://res.cloudinary.com/dmhcnhtng/image/upload/v1677358270/Untitled-1_copy_rpx8yb.jpg')]
       bg-cover bg-no-repeat"
     >
       {/* container */}
@@ -21,7 +21,7 @@ const ChatMessages = ({ messages }: ChatMessagesProps) => {
             <Message
               message={message}
               key={message._id}
-              me={message.sender._id === user?._id}
+              me={message.sender._id === user?.user._id}
             />
           ))}
       </div>

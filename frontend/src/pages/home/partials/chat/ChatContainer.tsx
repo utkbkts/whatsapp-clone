@@ -2,6 +2,7 @@ import { useChatStore } from "@/store/chat-store";
 import ChatHeader from "./ChatHeader";
 import ChatMessages from "./ChatMessages";
 import useMessagesAll from "@/hooks/useMessagesAll";
+import ChatActions from "./ChatActions";
 
 const ChatContainer = () => {
   const { activeConversation } = useChatStore();
@@ -16,6 +17,8 @@ const ChatContainer = () => {
         <ChatHeader />
         {/* Chat messages */}
         <ChatMessages messages={messages} />
+        {/* chat actions */}
+        <ChatActions />
       </div>
     </div>
   );

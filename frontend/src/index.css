@@ -51,14 +51,35 @@
 }
 
 .overflow_scrollbar {
-  height: calc(100vh - 155px);
+  height: calc(100vh - 135px);
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+/* emoji picker */
+.epr-dark-theme {
+  background: #202c33 !important;
+  border-radius: 0 !important;
+  border: none !important;
+}
+
+.epr-dark-theme {
+  width: 100% !important;
+}
+
+.openEmojiAnimation {
+  animation: openAn 0.1s forwards;
 }
 
 /* animation */
 .rotateAnimation {
   animation: rotate 0.4s forwards !important;
+}
+
+@keyframes openAn {
+  0% {
+    transform: translateY(60px);
+  }
 }
 
 @keyframes rotate {
