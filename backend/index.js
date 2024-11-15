@@ -10,7 +10,9 @@ import cors from "cors";
 import path from "path";
 import errorMiddleware from "./middlewares/error.middlewares.js";
 import { ConnectedDatabase } from "./db/connected.mongodb.js";
+//SOCKET IO
 
+import { app, server } from "./socket.js";
 //ROUTES
 import authRoutes from "./routes/auth.routes.js";
 import conversationRoutes from "./routes/conversation.routes.js";
@@ -19,9 +21,6 @@ import messagesRoutes from "./routes/messages.routes.js";
 const __dirname = path.resolve();
 //dotEnv config
 dotenv.config();
-
-//create express app
-const app = express();
 
 //morgan
 if (process.env.NODE_ENV !== "production") {
@@ -75,7 +74,7 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-const server = app.listen(process.env.PORT, () => {
+server.listen(process.env.PORT, () => {
   ConnectedDatabase();
   console.log(`server is running PORT:${process.env.PORT}`);
 });

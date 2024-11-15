@@ -1,8 +1,9 @@
+import { useSocketContext } from "@/context/SocketContext";
 import useConversationCreate from "@/hooks/useConversationCreate";
 
 const Contact = ({ contact }: any) => {
-  console.log("🚀 ~ Contact ~ contact:", contact);
   const { ConversationCreate } = useConversationCreate();
+  const { socket } = useSocketContext();
 
   const handleStartConversation = () => {
     const values = {
@@ -10,6 +11,13 @@ const Contact = ({ contact }: any) => {
       isGroup: false,
     };
 
+    if (!values.receiver_id) {
+      console.log("Receiver ID not found. Check the conversation data.");
+      return;
+    }
+    if (socket) {
+      socket.emit("join conversation", values.receiver_id);
+    }
     ConversationCreate(values);
   };
   return (

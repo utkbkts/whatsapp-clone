@@ -32,8 +32,8 @@ const createConversation = catchAsyncError(async (req, res, next) => {
     } else {
       let receiver_user = await User.findById(receiver_id);
       let convoData = {
-        name: receiver_user.name,
-        picture: receiver_id.picture,
+        name: "conversation name",
+        picture: "conversation picture",
         isGroup: false,
         users: [sender_id, receiver_id],
       };

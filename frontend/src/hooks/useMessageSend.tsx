@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { axios } from "@/lib/axios";
+import { useChatStore } from "@/store/chat-store";
 
 interface MessageSendParams {
   message: string;
@@ -23,6 +24,7 @@ interface UseMessageSendReturn {
 const useMessageSend = (): UseMessageSendReturn => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const { addMessage } = useChatStore();
 
   const messageSend = async ({
     message,
@@ -37,6 +39,7 @@ const useMessageSend = (): UseMessageSendReturn => {
         "/messages/create",
         { message, convo_id, files }
       );
+      addMessage(response.data);
       return response.data;
     } catch (err: any) {
       setError(err?.response?.data?.message || "An unexpected error occurred");

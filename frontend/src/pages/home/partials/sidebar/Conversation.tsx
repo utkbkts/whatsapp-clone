@@ -1,4 +1,4 @@
-import ConversationItem from "@/components/conversationItem/ConversationItem";
+import { ConversationItem } from "@/components/conversationItem/ConversationItem";
 import useConversationAll from "@/hooks/useConversationAll";
 
 const Conversation = () => {

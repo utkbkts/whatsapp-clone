@@ -62,6 +62,6 @@ export const dateHandler = (date: any) => {
   return time;
 };
 
-export const capitalize = (word: any) => {
-  return word[0].toUpperCase() + word.substring(1).toLowerCase();
+export const capitalize = (str: string) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
 };

@@ -1,5 +1,6 @@
 import AttachMents from "@/components/attachMents/AttachMents";
 import EmojiPicker from "@/components/emojiPicker/EmojiPicker";
+import { useSocketContext } from "@/context/SocketContext";
 import useMessageSend from "@/hooks/useMessageSend";
 import { useChatStore } from "@/store/chat-store";
 import SendIcon from "@/svg/SendIcon";
@@ -8,9 +9,10 @@ import React, { useRef, useState } from "react";
 import MoonLoader from "react-spinners/MoonLoader";
 const ChatActions = () => {
   const [message, setMessage] = useState("");
-
   const { activeConversation } = useChatStore();
   const { messageSend, loading } = useMessageSend();
+  const { socket } = useSocketContext();
+
   const textRef = useRef<HTMLInputElement>(null);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(e.target.value);
@@ -25,8 +27,10 @@ const ChatActions = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await messageSend(values);
-
+      let newMsg = await messageSend(values);
+      if (socket) {
+        socket.emit("send message", newMsg);
+      }
       setMessage("");
     } catch (error) {
       console.error("Error sending message:", error);
