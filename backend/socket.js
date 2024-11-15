@@ -16,15 +16,28 @@ const io = new Server(server, {
   },
 });
 
+let onlineUsers = [];
 io.on("connection", (socket) => {
   // Kullanıcı "join" olayı gönderdiğinde
   socket.on("join", (user) => {
-    socket.join(user); // Kullanıcıya özel bir odada yer açıyoruz
+    socket.join(user);
+    if (!onlineUsers.some((u) => u.userId === user)) {
+      //en az biri true olursa true olur
+      console.log(`${user} to online`);
+      onlineUsers.push({ userId: user, socketId: socket.id });
+    }
+    io.emit("get-online-users", onlineUsers);
+  });
+
+  socket.on("disconnect", () => {
+    onlineUsers = onlineUsers.filter((user) => user.socketId !== socket.id);
+    console.log(`${socket.id} user disconnected`);
+    io.emit("get-online-users", onlineUsers);
   });
 
   // Kullanıcı bir "join conversation" olayı gönderdiğinde
   socket.on("join conversation", (conversationId) => {
-    socket.join(conversationId); // Konversasyon odasında yer açıyoruz
+    socket.join(conversationId);
   });
 
   socket.on("send message", (message) => {
