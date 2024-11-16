@@ -102,14 +102,14 @@ const HandleAndSend = ({ activeIndex, setActiveIndex, message }: Props) => {
         ))}
         {/* Add another file */}
         <Add />
-        <form
-          onSubmit={sendMessageHandler}
+        <div
+          onClick={(e) => sendMessageHandler(e)}
           className="bg-green_1 w-16 h-16 mt-2 rounded-full flex items-center justify-center cursor-pointer"
         >
           <button type="submit">
             <SendIcon className="fill-white" />
           </button>
-        </form>
+        </div>
       </div>
     </div>
   );

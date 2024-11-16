@@ -6,7 +6,7 @@ import { useSocketContext } from "@/context/SocketContext";
 interface MessageSendParams {
   message: string;
   convo_id: number;
-  files?: File[];
+  files?: (string | null)[];
 }
 
 interface MessageSendResponse {

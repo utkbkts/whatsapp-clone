@@ -1,3 +1,4 @@
+import CloseIcon from "@/svg/Close";
 import TraingleIcon from "@/svg/Triangle";
 import { MessagesType } from "@/types/type";
 import moment from "moment";
@@ -43,6 +44,9 @@ const FileMessage = ({ message, me, fileMessage }: ChatMessagesProps) => {
               <TraingleIcon className="dark:fill-dark_bg_2 rotate-[60deg] absolute top-[-5px] -left-1.5" />
             </span>
           ) : null}
+          {me && (
+            <CloseIcon className="dark:fill-dark_svg_1 absolute top-0 right-0 cursor-pointer" />
+          )}
         </div>
       </div>
     </div>

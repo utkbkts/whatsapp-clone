@@ -45,10 +45,8 @@ const ChatActions = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const newMsg = await messageSend(values);
-      if (socket) {
-        socket.emit("send message", newMsg);
-      }
+      await messageSend(values);
+
       setMessage("");
     } catch (error) {
       console.error("Error sending message:", error);

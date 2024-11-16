@@ -15,7 +15,7 @@ interface ChatState {
   updateMessage: (message: any) => void;
 }
 
-export const useChatStore = create<ChatState>((set, get) => ({
+export const useChatStore = create<ChatState>((set) => ({
   status: "",
   error: "",
   conversations: [],

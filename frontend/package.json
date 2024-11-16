@@ -25,6 +25,7 @@
     "react-video-thumbnail": "^0.1.3",
     "socket.io-client": "^4.8.1",
     "tailwind-merge": "^2.5.4",
+    "whatsapp-clone": "file:..",
     "zod": "^3.23.8",
     "zustand": "^5.0.1"
   },

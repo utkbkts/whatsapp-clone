@@ -1,4 +1,4 @@
-import { OnlineUserType, SignupType } from "@/types/type";
+import { OnlineUserType } from "@/types/type";
 
 export const getConversationId = (user: any, users: any) => {
   return users[0]._id === user.user._id ? users[1]._id : users[0]._id;

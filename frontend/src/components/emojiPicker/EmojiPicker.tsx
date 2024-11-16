@@ -32,7 +32,7 @@ const EmojiPicker = ({ textRef, message, setMessage }: Props) => {
     setEmoji(!showEmoji);
   };
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const handleEmoji = (emojiData: any, e: MouseEvent) => {
+  const handleEmoji = (emojiData: any, _e: MouseEvent) => {
     const emoji = emojiData?.emoji;
     if (!emoji || !textRef.current) return;
 
