@@ -1,14 +1,16 @@
 import { useFileStore } from "@/store/file-store";
+interface Props {
+  activeIndex: number;
+}
 
-const FileViewer = () => {
+const FileViewer = ({ activeIndex }: Props) => {
   const { files } = useFileStore();
-  console.log("🚀 ~ FileViewer ~ files:", files);
   return (
     <div className="w-full max-w-[60%]">
       <div className="flex justify-center items-center">
-        {files[0].imgData ? (
+        {files[activeIndex].imgData ? (
           <img
-            src={files[0].imgData as string}
+            src={files[activeIndex].imgData as string}
             alt="file"
             className="hview  rounded-md max-w-[80%] object-contain"
           />
@@ -19,7 +21,8 @@ const FileViewer = () => {
               No preview available
             </h1>
             <span className="dark:text-dark_text_2">
-              {Math.ceil(files[0]?.file.size) / 100} kB - {files[0].file.type}
+              {Math.ceil(files[activeIndex]?.file.size) / 100} kB -{" "}
+              {files[activeIndex].file.type}
             </span>
           </div>
         )}

@@ -1,9 +1,13 @@
 import { useFileStore } from "@/store/file-store";
 import CloseIcon from "@/svg/Close";
 
-const Header = () => {
+interface Props {
+  activeIndex: number;
+}
+
+const Header = ({ activeIndex }: Props) => {
   const { clearFile, files } = useFileStore();
-  const fileName = files.map((item) => item.file.name);
+
   return (
     <div className="w-full pl-4">
       {/* Container */}
@@ -12,7 +16,9 @@ const Header = () => {
         <div className="cursor-pointer" onClick={() => clearFile()}>
           <CloseIcon className="dark:fill-dark_svg_2" />
         </div>
-        <h1 className="dark:text-dark_text_1 text-[15px]">{fileName}</h1>
+        <h1 className="dark:text-dark_text_1 text-[15px]">
+          {files[activeIndex].file.name}
+        </h1>
       </div>
     </div>
   );
