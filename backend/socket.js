@@ -23,7 +23,6 @@ io.on("connection", (socket) => {
     socket.join(user);
     if (!onlineUsers.some((u) => u.userId === user)) {
       //en az biri true olursa true olur
-      console.log(`${user} to online`);
       onlineUsers.push({ userId: user, socketId: socket.id });
     }
     io.emit("get-online-users", onlineUsers);
@@ -31,7 +30,6 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", () => {
     onlineUsers = onlineUsers.filter((user) => user.socketId !== socket.id);
-    console.log(`${socket.id} user disconnected`);
     io.emit("get-online-users", onlineUsers);
   });
 
@@ -47,6 +45,14 @@ io.on("connection", (socket) => {
       if (user._id === message.sender._id) return;
       socket.in(user._id).emit("message received", message);
     });
+  });
+
+  //typing
+  socket.on("typing", (conversation) => {
+    socket.in(conversation).emit("typing", conversation);
+  });
+  socket.on("stop typing", (conversation) => {
+    socket.in(conversation).emit("stop typing");
   });
 
   // Bağlantı kesildiğinde kullanıcıya ait tüm odalardan çıkabiliriz

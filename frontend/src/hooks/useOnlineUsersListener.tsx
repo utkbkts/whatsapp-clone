@@ -14,7 +14,6 @@ const useOnlineUsersListener = () => {
 
     socket.on("get-online-users", (users) => {
       setOnlineUsers(users);
-      console.log("Online Users: ", users);
     });
 
     return () => {

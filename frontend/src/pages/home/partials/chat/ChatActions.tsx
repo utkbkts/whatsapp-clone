@@ -7,6 +7,7 @@ import SendIcon from "@/svg/SendIcon";
 import Input from "@/ui/Input";
 import React, { useRef, useState } from "react";
 import MoonLoader from "react-spinners/MoonLoader";
+
 const ChatActions = () => {
   const [message, setMessage] = useState("");
   const { activeConversation } = useChatStore();
@@ -14,8 +15,25 @@ const ChatActions = () => {
   const { socket } = useSocketContext();
 
   const textRef = useRef<HTMLInputElement>(null);
+  const [typing, setTyping] = useState(false);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(e.target.value);
+    if (!socket) return;
+    if (!typing) {
+      setTyping(true);
+      socket.emit("typing", activeConversation._id);
+    }
+    const lastTypingTime = new Date().getTime();
+    const timer = 1000;
+    setTimeout(() => {
+      const timeNow = new Date().getTime();
+      const timeDiff = timeNow - lastTypingTime;
+      if (timeDiff >= timer && typing) {
+        socket.emit("stop typing", activeConversation._id);
+        setTyping(false);
+      }
+    }, timer);
   };
 
   const values = {
@@ -27,7 +45,7 @@ const ChatActions = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      let newMsg = await messageSend(values);
+      const newMsg = await messageSend(values);
       if (socket) {
         socket.emit("send message", newMsg);
       }

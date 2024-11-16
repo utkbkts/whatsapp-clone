@@ -9,6 +9,7 @@ const HomePage = () => {
   const { activeConversation } = useChatStore();
   useMessageListener();
   useOnlineUsersListener();
+
   return (
     <div className="h-screen dark:bg-dark_bg_1 flex items-start justify-center py-[19px] overflow-hidden">
       {/* Container */}

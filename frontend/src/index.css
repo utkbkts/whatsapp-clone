@@ -76,6 +76,10 @@
   animation: rotate 0.4s forwards !important;
 }
 
+.hview {
+  height: calc(100vh - 200px);
+}
+
 @keyframes openAn {
   0% {
     transform: translateY(60px);

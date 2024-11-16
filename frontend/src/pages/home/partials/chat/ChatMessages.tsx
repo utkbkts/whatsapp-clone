@@ -2,6 +2,7 @@ import { MessagesType } from "@/types/type";
 import Message from "./Message";
 import { useUserStore } from "@/store/user-store";
 import { useEffect, useRef } from "react";
+import Typing from "./Typing";
 
 interface ChatMessagesProps {
   messages: MessagesType[];
@@ -32,6 +33,7 @@ const ChatMessages = ({ messages }: ChatMessagesProps) => {
               me={message?.sender?._id === user?.user._id}
             />
           ))}
+        <Typing />
         <div className="mt-2" ref={endRef}></div>
       </div>
     </div>
