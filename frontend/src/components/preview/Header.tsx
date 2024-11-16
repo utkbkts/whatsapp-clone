@@ -17,7 +17,7 @@ const Header = ({ activeIndex }: Props) => {
           <CloseIcon className="dark:fill-dark_svg_2" />
         </div>
         <h1 className="dark:text-dark_text_1 text-[15px]">
-          {files[activeIndex].file.name}
+          {files[activeIndex]?.file?.name}
         </h1>
       </div>
     </div>

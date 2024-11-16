@@ -4,7 +4,7 @@ import { useRef } from "react";
 
 const PhotoAttachment: React.FC = () => {
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const MAX_SIZE = 2 * 1024 * 1024;
+  const MAX_SIZE = 5 * 1024 * 1024;
   const { setFile } = useFileStore();
 
   const imageHandler = (e: React.ChangeEvent<HTMLInputElement>) => {

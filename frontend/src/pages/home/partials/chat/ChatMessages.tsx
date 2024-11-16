@@ -3,6 +3,7 @@ import Message from "./Message";
 import { useUserStore } from "@/store/user-store";
 import { useEffect, useRef } from "react";
 import Typing from "./Typing";
+import FileMessage from "./FileMessage";
 
 interface ChatMessagesProps {
   messages: MessagesType[];
@@ -27,11 +28,25 @@ const ChatMessages = ({ messages }: ChatMessagesProps) => {
         {/* messages */}
         {messages &&
           messages.map((message) => (
-            <Message
-              message={message}
-              key={message._id}
-              me={message?.sender?._id === user?.user._id}
-            />
+            <>
+              {message.files.length > 0
+                ? message.files.map((files) => (
+                    <FileMessage
+                      message={message}
+                      key={files._id}
+                      me={message?.sender?._id === user?.user._id}
+                      fileMessage={files}
+                    />
+                  ))
+                : null}
+              {message.message.length > 0 ? (
+                <Message
+                  message={message}
+                  key={message._id}
+                  me={message?.sender?._id === user?.user._id}
+                />
+              ) : null}
+            </>
           ))}
         <Typing />
         <div className="mt-2" ref={endRef}></div>

@@ -14,7 +14,12 @@ const messageSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "conversation",
     },
-    files: [],
+    files: [
+      {
+        public_id: { type: String },
+        url: { type: String },
+      },
+    ],
   },
   { timestamps: true }
 );

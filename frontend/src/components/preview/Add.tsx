@@ -1,14 +1,14 @@
 import { useFileStore } from "@/store/file-store";
-import DocumentIcon from "@/svg/Document";
-import { useRef } from "react";
+import CloseIcon from "@/svg/Close";
+import React, { useRef } from "react";
 
-const DocumentAttachment = () => {
+const Add = () => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const { setFile } = useFileStore();
+  const MAX_SIZE = 2 * 1024 * 1024;
 
-  const documentHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const filestHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
-    const MAX_SIZE = 2 * 1024 * 1024;
 
     files.forEach((file) => {
       if (
@@ -26,9 +26,17 @@ const DocumentAttachment = () => {
         file.type !== "application/vnd.rar" &&
         file.type !== "application/zip" &&
         file.type !== "audio/mpeg" &&
-        file.type !== "audio/wav"
+        file.type !== "audio/wav" &&
+        file.type !== "image/png" &&
+        file.type !== "image/jpeg" &&
+        file.type !== "image/gif" &&
+        file.type !== "image/webp" &&
+        file.type !== "video/mp4" &&
+        file.type !== "video/mpeg" &&
+        file.type !== "image/webm" &&
+        file.type !== "image/webp"
       ) {
-        alert(`Unsupported file type: ${file.type}`);
+        alert("Invalid file type");
         return;
       }
       const reader = new FileReader();
@@ -36,6 +44,7 @@ const DocumentAttachment = () => {
         alert("Image size exceeds 2MB");
         return;
       }
+
       reader.onload = () => {
         if (reader.readyState === FileReader.DONE && reader.result) {
           setFile(file, reader.result as string);
@@ -45,24 +54,25 @@ const DocumentAttachment = () => {
     });
   };
   return (
-    <li>
-      <button
-        type="button"
-        className="bg-[#5F66CD] rounded-full"
+    <>
+      <div
         onClick={() => inputRef.current?.click()}
+        className="w-14 h-14 mt-4 border dark:border-white rounded-md flex items-center justify-center cursor-pointer"
       >
-        <DocumentIcon />
-      </button>
+        <span className="rotate-45">
+          <CloseIcon className="dark:fill-dark_svg_1" />
+        </span>
+      </div>
       <input
         type="file"
         hidden
         multiple
         ref={inputRef}
-        accept="application/*,text/plain,audio/*"
-        onChange={documentHandler}
+        accept="application/*,text/plain,image/png,image/jpeg,image/gif,image/webp,video/mp4,video/mpeg"
+        onChange={filestHandler}
       />
-    </li>
+    </>
   );
 };
 
-export default DocumentAttachment;
+export default Add;

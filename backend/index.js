@@ -26,14 +26,11 @@ dotenv.config();
 if (process.env.NODE_ENV !== "production") {
   app.use(morgan("dev"));
 }
-
 //helmet
 app.use(helmet());
 
 //parse json request url
-app.use(express.json());
-
-//parse json request body
+app.use(express.json({ limit: "150mb" }));
 app.use(express.urlencoded({ extended: true }));
 
 //sanitize request data

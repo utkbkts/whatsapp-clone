@@ -3,7 +3,8 @@ import Message from "../models/message.model.js";
 // Mesaj oluşturma fonksiyonu
 export const createMessage = async (msgData) => {
   try {
-    const newMessage = await Message.create(msgData);
+    let newMessage = await Message.create(msgData);
+
     return newMessage;
   } catch (error) {
     console.error("Error creating message:", error);

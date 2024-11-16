@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { axios } from "@/lib/axios";
 import { useChatStore } from "@/store/chat-store";
+import { useSocketContext } from "@/context/SocketContext";
 
 interface MessageSendParams {
   message: string;
@@ -25,7 +26,7 @@ const useMessageSend = (): UseMessageSendReturn => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const { addMessage } = useChatStore();
-
+  const { socket } = useSocketContext();
   const messageSend = async ({
     message,
     convo_id,
@@ -33,13 +34,14 @@ const useMessageSend = (): UseMessageSendReturn => {
   }: MessageSendParams): Promise<MessageSendResponse | void> => {
     setError(null);
     setLoading(true);
-
+    if (!socket) return;
     try {
       const response = await axios.post<MessageSendResponse>(
         "/messages/create",
         { message, convo_id, files }
       );
       addMessage(response.data);
+      socket.emit("send message", response.data);
       return response.data;
     } catch (err: any) {
       setError(err?.response?.data?.message || "An unexpected error occurred");

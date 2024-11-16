@@ -35,7 +35,11 @@ export type searchResultsType = {
   success: boolean;
   users: SignupType[];
 };
-
+export type Files = {
+  public_id: string;
+  url: string;
+  _id: string;
+};
 export type MessagesType = {
   conversation: {
     picture: {
@@ -46,6 +50,7 @@ export type MessagesType = {
   message: string;
   sender: SignupType;
   _id: any;
+  files: Files[];
 };
 
 export type OnlineUserType = {

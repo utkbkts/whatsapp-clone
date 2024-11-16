@@ -14,7 +14,7 @@ export const upload_file = (file, folder) => {
       file,
       {
         folder,
-        resource_type: "image",
+        resource_type: "auto",
         transformation: [
           { width: 1024, quality: "auto:good", fetch_format: "auto" },
         ],

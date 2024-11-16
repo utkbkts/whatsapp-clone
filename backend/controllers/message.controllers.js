@@ -5,8 +5,8 @@ import {
   getMessagesByConversation,
   populateMessage,
 } from "../services/messages.service.js";
+import { upload_file } from "../utils/cloudinary.js";
 import ErrorHandler from "../utils/error.handler.js";
-
 const sendMessage = catchAsyncError(async (req, res, next) => {
   const userId = req.user._id;
 
@@ -15,15 +15,19 @@ const sendMessage = catchAsyncError(async (req, res, next) => {
   if (!convo_id || (!message && !files)) {
     return next(new ErrorHandler("Invalid request", 400));
   }
+  const staticImages = await Promise.all(
+    files?.map((item) => upload_file(item, "whatsapp"))
+  );
 
   const msgData = {
     sender: userId,
     message,
-    files,
     conversation: convo_id,
-    files: files || [],
+    files: staticImages || [],
   };
+
   let newMessage = await createMessage(msgData);
+
   let populatedMessage = await populateMessage(newMessage._id);
   await updateLatestMessage(convo_id, newMessage);
   res.json(populatedMessage);

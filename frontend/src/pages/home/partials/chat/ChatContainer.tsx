@@ -16,7 +16,6 @@ const ChatContainer = () => {
   const { messages } = useMessagesAll(convo_id);
   const { onlineUsers } = useOnlineUsersListener();
   const { files } = useFileStore();
-  console.log("🚀 ~ ChatContainer ~ files:", files);
   const fileLength = files.map((item) => item.file).length;
   return (
     <div className="relative w-full h-full border-l dark:border-l-dark_border_2 select-none overflow-hidden">
