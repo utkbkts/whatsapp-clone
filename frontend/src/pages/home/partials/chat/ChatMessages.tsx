@@ -2,14 +2,17 @@ import { MessagesType } from "@/types/type";
 import Message from "./Message";
 import { useUserStore } from "@/store/user-store";
 import { useEffect, useRef } from "react";
-import Typing from "./Typing";
 import FileMessage from "./FileMessage";
+import Typing from "./Typing";
+import { useChatStore } from "@/store/chat-store";
 
 interface ChatMessagesProps {
   messages: MessagesType[];
+  typing: any;
 }
-const ChatMessages = ({ messages }: ChatMessagesProps) => {
+const ChatMessages = ({ messages, typing }: ChatMessagesProps) => {
   const { user } = useUserStore();
+  const { activeConversation } = useChatStore();
   const endRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     endRef.current?.scrollIntoView({
@@ -48,7 +51,7 @@ const ChatMessages = ({ messages }: ChatMessagesProps) => {
               ) : null}
             </>
           ))}
-        <Typing />
+        {typing === activeConversation._id ? <Typing /> : null}
         <div className="mt-2" ref={endRef}></div>
       </div>
     </div>

@@ -3,7 +3,7 @@ import useConversationAll from "@/hooks/useConversationAll";
 import { useUserStore } from "@/store/user-store";
 import { checkOnlineStatus } from "@/utils/chat";
 
-const Conversation = ({ onlineUsers }: any) => {
+const Conversation = ({ onlineUsers, typing }: any) => {
   const { conversations } = useConversationAll();
   const { user } = useUserStore();
 
@@ -18,7 +18,12 @@ const Conversation = ({ onlineUsers }: any) => {
           );
 
           return (
-            <ConversationItem convo={convo} key={convo._id} online={!!check} />
+            <ConversationItem
+              convo={convo}
+              key={convo._id}
+              online={!!check}
+              typing={typing}
+            />
           );
         })}
     </div>

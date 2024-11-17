@@ -6,7 +6,13 @@ import useConversationSearch from "@/hooks/useConversationSearch";
 import SearchResultsItem from "@/components/searchResultsItem/SearchResultsItem";
 import { OnlineUserType } from "@/types/type";
 
-const Sidebar = ({ onlineUsers }: { onlineUsers: OnlineUserType[] }) => {
+const Sidebar = ({
+  onlineUsers,
+  typing,
+}: {
+  onlineUsers: OnlineUserType[];
+  typing: any;
+}) => {
   const { searchResults } = useConversationSearch();
 
   return (
@@ -21,7 +27,7 @@ const Sidebar = ({ onlineUsers }: { onlineUsers: OnlineUserType[] }) => {
       {searchResults?.results > 0 ? (
         <SearchResultsItem />
       ) : (
-        <Conversation onlineUsers={onlineUsers} />
+        <Conversation onlineUsers={onlineUsers} typing={typing} />
       )}
     </div>
   );

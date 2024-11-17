@@ -12,9 +12,14 @@ import {
 interface ConversationItemProps {
   convo: Conversation;
   online: boolean;
+  typing: any;
 }
 
-export const ConversationItem = ({ convo, online }: ConversationItemProps) => {
+export const ConversationItem = ({
+  convo,
+  online,
+  typing,
+}: ConversationItemProps) => {
   const { ConversationCreate } = useConversationCreate();
   const { user } = useUserStore();
   const { socket } = useSocketContext();
@@ -29,11 +34,11 @@ export const ConversationItem = ({ convo, online }: ConversationItemProps) => {
       return;
     }
 
+    ConversationCreate(values);
+
     if (socket) {
       socket.emit("join conversation", values.receiver_id);
     }
-
-    ConversationCreate(values);
   };
 
   return (
@@ -63,7 +68,15 @@ export const ConversationItem = ({ convo, online }: ConversationItemProps) => {
 
           <div className="flex items-center gap-x-1 dark:text-dark_text_2">
             <div className="flex-1 items-center gap-x-1 flex justify-between">
-              <p>{convo?.latestMessage?.message.substring(0, 20)}</p>
+              {typing ? (
+                <p className="text-green_1">Typing...</p>
+              ) : (
+                <p>
+                  {(convo?.latestMessage?.message.length as any) > 25
+                    ? `${convo.latestMessage?.message.substring(0, 25)}...`
+                    : convo.latestMessage?.message}
+                </p>
+              )}
               <span>
                 {convo?.createdAt
                   ? dateHandler(convo?.latestMessage?.createdAt)

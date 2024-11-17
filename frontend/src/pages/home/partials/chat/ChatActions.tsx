@@ -22,6 +22,7 @@ const ChatActions = () => {
     if (!socket) return;
     if (!typing) {
       setTyping(true);
+      console.log(typing, "typing");
       socket.emit("typing", activeConversation._id);
     }
     const lastTypingTime = new Date().getTime();
@@ -30,6 +31,7 @@ const ChatActions = () => {
       const timeNow = new Date().getTime();
       const timeDiff = timeNow - lastTypingTime;
       if (timeDiff >= timer && typing) {
+        console.log(typing, "stop typing");
         socket.emit("stop typing", activeConversation._id);
         setTyping(false);
       }
