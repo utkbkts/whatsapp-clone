@@ -1,7 +1,9 @@
 import catchAsyncError from "../middlewares/catch.middleware.js";
+import Message from "../models/message.model.js";
 import { updateLatestMessage } from "../services/conversation.service.js";
 import {
   createMessage,
+  deleteLatestMessage,
   getMessagesByConversation,
   populateMessage,
 } from "../services/messages.service.js";
@@ -46,4 +48,20 @@ const getMessages = catchAsyncError(async (req, res, next) => {
   res.json(messages);
 });
 
-export default { sendMessage, getMessages };
+const deleteMessage = catchAsyncError(async (req, res, next) => {
+  const messageId = req.params.id;
+  const message = await Message.findById(messageId);
+
+  if (!message) {
+    return next(new ErrorHandler("Message not found", 404));
+  }
+
+  const isDeleted = await deleteLatestMessage(message);
+
+  if (!isDeleted) {
+    return next(new ErrorHandler("Failed to delete the message", 400));
+  }
+
+  res.json({ success: true, message: "Message deleted successfully" });
+});
+export default { sendMessage, getMessages, deleteMessage };

@@ -7,4 +7,6 @@ router.post("/create", isAuthenticatedUser, messagesControllers.sendMessage);
 
 router.get("/:convo_id", isAuthenticatedUser, messagesControllers.getMessages);
 
+router.delete("/:id", isAuthenticatedUser, messagesControllers.deleteMessage);
+
 export default router;

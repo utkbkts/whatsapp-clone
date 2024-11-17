@@ -14,10 +14,14 @@ interface Props {
 }
 
 const HandleAndSend = ({ activeIndex, setActiveIndex, message }: Props) => {
-  const { files, removeFile } = useFileStore();
+  const { files, removeFile, clearFile } = useFileStore();
   const { activeConversation } = useChatStore();
   const { socket } = useSocketContext();
   const { messageSend } = useMessageSend();
+
+  const handleFileClear = () => {
+    clearFile();
+  };
 
   const sendMessageHandler = async (e: FormEvent) => {
     e.preventDefault();
@@ -31,6 +35,7 @@ const HandleAndSend = ({ activeIndex, setActiveIndex, message }: Props) => {
     };
     try {
       await messageSend(values);
+      handleFileClear();
       socket.emit("send message", values);
     } catch (error) {
       console.log(error);

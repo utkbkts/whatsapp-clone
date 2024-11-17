@@ -4,8 +4,9 @@ import SidebarHeader from "./SidebarHeader";
 import Conversation from "./Conversation";
 import useConversationSearch from "@/hooks/useConversationSearch";
 import SearchResultsItem from "@/components/searchResultsItem/SearchResultsItem";
+import { OnlineUserType } from "@/types/type";
 
-const Sidebar = ({ onlineUsers }) => {
+const Sidebar = ({ onlineUsers }: { onlineUsers: OnlineUserType[] }) => {
   const { searchResults } = useConversationSearch();
 
   return (

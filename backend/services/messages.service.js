@@ -1,4 +1,5 @@
 import Message from "../models/message.model.js";
+import { delete_file } from "../utils/cloudinary.js";
 
 // Mesaj oluşturma fonksiyonu
 export const createMessage = async (msgData) => {
@@ -55,4 +56,22 @@ export const getMessagesByConversation = async (convo_id) => {
   }
 
   return convo;
+};
+
+export const deleteLatestMessage = async (message) => {
+  try {
+    if (message.files && message.files.length > 0) {
+      for (let i = 0; i < message.files.length; i++) {
+        await delete_file(message.files[i].public_id);
+      }
+    }
+
+    await message.deleteOne();
+    return message;
+  } catch (error) {
+    console.error("Error deleting message:", error);
+    throw new Error(
+      error.message || "An error occurred while deleting the message."
+    );
+  }
 };

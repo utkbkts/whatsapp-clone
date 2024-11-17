@@ -8,7 +8,6 @@ import FileMessage from "./FileMessage";
 interface ChatMessagesProps {
   messages: MessagesType[];
 }
-
 const ChatMessages = ({ messages }: ChatMessagesProps) => {
   const { user } = useUserStore();
   const endRef = useRef<HTMLDivElement | null>(null);
@@ -18,6 +17,7 @@ const ChatMessages = ({ messages }: ChatMessagesProps) => {
       block: "end",
     });
   }, [messages]);
+
   return (
     <div
       className=" bg-[url('https://res.cloudinary.com/dmhcnhtng/image/upload/v1677358270/Untitled-1_copy_rpx8yb.jpg')]

@@ -3,7 +3,7 @@ import useConversationAll from "@/hooks/useConversationAll";
 import { useUserStore } from "@/store/user-store";
 import { checkOnlineStatus } from "@/utils/chat";
 
-const Conversation = ({ onlineUsers }) => {
+const Conversation = ({ onlineUsers }: any) => {
   const { conversations } = useConversationAll();
   const { user } = useUserStore();
 

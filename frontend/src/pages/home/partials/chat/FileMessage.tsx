@@ -1,3 +1,4 @@
+import useDeleteMessage from "@/hooks/useDeleteMessage";
 import CloseIcon from "@/svg/Close";
 import TraingleIcon from "@/svg/Triangle";
 import { MessagesType } from "@/types/type";
@@ -10,7 +11,15 @@ interface ChatMessagesProps {
 }
 const FileMessage = ({ message, me, fileMessage }: ChatMessagesProps) => {
   const isVideo = fileMessage.url.endsWith(".mp4");
+  const { message: messageId } = useDeleteMessage();
 
+  const handleDeleteMessage = async (id: string) => {
+    try {
+      await messageId(id);
+    } catch (error) {
+      console.error("Error deleting message:", error);
+    }
+  };
   return (
     <div
       className={`w-full flex mt-2 space-x-3 max-w-xs ${
@@ -45,7 +54,9 @@ const FileMessage = ({ message, me, fileMessage }: ChatMessagesProps) => {
             </span>
           ) : null}
           {me && (
-            <CloseIcon className="dark:fill-dark_svg_1 absolute top-0 right-0 cursor-pointer" />
+            <div onClick={() => handleDeleteMessage(message._id)}>
+              <CloseIcon className="dark:fill-dark_svg_1 absolute top-0 right-0 cursor-pointer" />
+            </div>
           )}
         </div>
       </div>

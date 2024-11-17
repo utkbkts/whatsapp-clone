@@ -36,8 +36,8 @@ io.on("connection", (socket) => {
   });
 
   // Kullanıcı bir "join conversation" olayı gönderdiğinde
-  socket.on("join conversation", (conversation) => {
-    socket.join(conversation);
+  socket.on("join conversation", (conversationId) => {
+    socket.join(conversationId);
   });
 
   socket.on("send message", (message) => {

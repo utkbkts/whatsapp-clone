@@ -8,7 +8,7 @@ import { useUserStore } from "@/store/user-store";
 import { useFileStore } from "@/store/file-store";
 import FilePreview from "@/components/preview/FilePreview";
 
-const ChatContainer = ({ callUser, onlineUsers }) => {
+const ChatContainer = ({ callUser, onlineUsers }: any) => {
   const { activeConversation } = useChatStore();
   const { user } = useUserStore();
   const convo_id = activeConversation._id;

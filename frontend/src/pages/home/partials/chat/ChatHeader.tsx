@@ -1,3 +1,4 @@
+/* eslint-disable no-constant-condition */
 import { capitalize } from "@/helpers/helpers";
 import { useChatStore } from "@/store/chat-store";
 import { useUserStore } from "@/store/user-store";
@@ -7,7 +8,7 @@ import SearchLargeIcon from "@/svg/SearchLarge";
 import VideoCallIcon from "@/svg/VideoCall";
 import { getConversationName, getConversationPicture } from "@/utils/chat";
 
-const ChatHeader = ({ online, callUser }: { online: boolean }) => {
+const ChatHeader = ({ online, callUser }: any) => {
   const { activeConversation } = useChatStore();
   const { user } = useUserStore();
 
