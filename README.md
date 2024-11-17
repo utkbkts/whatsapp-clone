@@ -15,7 +15,7 @@
 
 ## 🔗 Bağlantılar
 
-- **Youtube Video**: https://www.youtube.com/watch?v=g_w0VopM_uU
+- **Youtube Video**: https://www.youtube.com/watch?v=EhaE9hs1kDk
 ---
 ## 📦 Teknolojiler
 
