@@ -40,9 +40,8 @@ const useMessageSend = (): UseMessageSendReturn => {
         "/messages/create",
         { message, convo_id, files }
       );
-      addMessage(response.data);
       socket.emit("send message", response.data);
-      return response.data;
+      addMessage(response.data);
     } catch (err: any) {
       setError(err?.response?.data?.message || "An unexpected error occurred");
       console.error("Error sending message:", err);

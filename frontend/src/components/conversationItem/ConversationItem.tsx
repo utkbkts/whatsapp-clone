@@ -33,7 +33,6 @@ export const ConversationItem = ({
       console.log("Receiver ID not found. Check the conversation data.");
       return;
     }
-
     ConversationCreate(values);
 
     if (socket) {
