@@ -1,7 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
 import morgan from "morgan";
-import helmet from "helmet";
 import mongoSanitize from "express-mongo-sanitize";
 import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
@@ -25,8 +24,6 @@ dotenv.config();
 if (process.env.NODE_ENV !== "production") {
   app.use(morgan("dev"));
 }
-//helmet
-app.use(helmet());
 
 //parse json request url
 app.use(express.json({ limit: "150mb" }));
