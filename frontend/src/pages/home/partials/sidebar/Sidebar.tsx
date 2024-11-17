@@ -5,7 +5,7 @@ import Conversation from "./Conversation";
 import useConversationSearch from "@/hooks/useConversationSearch";
 import SearchResultsItem from "@/components/searchResultsItem/SearchResultsItem";
 
-const Sidebar = () => {
+const Sidebar = ({ onlineUsers }) => {
   const { searchResults } = useConversationSearch();
 
   return (
@@ -17,7 +17,11 @@ const Sidebar = () => {
       {/* search */}
       <Search />
       {/* conversation */}
-      {searchResults?.results > 0 ? <SearchResultsItem /> : <Conversation />}
+      {searchResults?.results > 0 ? (
+        <SearchResultsItem />
+      ) : (
+        <Conversation onlineUsers={onlineUsers} />
+      )}
     </div>
   );
 };

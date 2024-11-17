@@ -4,6 +4,9 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [react()],
+  define: {
+    global: "globalThis",
+  },
   server: {
     proxy: {
       "/api": {
@@ -14,6 +17,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      "readable-stream": "vite-compatible-readable-stream",
     },
   },
 });

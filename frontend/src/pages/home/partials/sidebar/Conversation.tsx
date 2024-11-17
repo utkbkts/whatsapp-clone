@@ -1,13 +1,11 @@
 import { ConversationItem } from "@/components/conversationItem/ConversationItem";
 import useConversationAll from "@/hooks/useConversationAll";
-import useOnlineUsersListener from "@/hooks/useOnlineUsersListener";
 import { useUserStore } from "@/store/user-store";
 import { checkOnlineStatus } from "@/utils/chat";
 
-const Conversation = () => {
+const Conversation = ({ onlineUsers }) => {
   const { conversations } = useConversationAll();
   const { user } = useUserStore();
-  const { onlineUsers } = useOnlineUsersListener();
 
   return (
     <div className="convos scrollbar">

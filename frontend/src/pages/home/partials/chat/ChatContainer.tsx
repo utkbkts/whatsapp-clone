@@ -3,18 +3,16 @@ import ChatHeader from "./ChatHeader";
 import ChatMessages from "./ChatMessages";
 import useMessagesAll from "@/hooks/useMessagesAll";
 import ChatActions from "./ChatActions";
-import useOnlineUsersListener from "@/hooks/useOnlineUsersListener";
 import { checkOnlineStatus } from "@/utils/chat";
 import { useUserStore } from "@/store/user-store";
 import { useFileStore } from "@/store/file-store";
 import FilePreview from "@/components/preview/FilePreview";
 
-const ChatContainer = () => {
+const ChatContainer = ({ callUser, onlineUsers }) => {
   const { activeConversation } = useChatStore();
   const { user } = useUserStore();
   const convo_id = activeConversation._id;
   const { messages } = useMessagesAll(convo_id);
-  const { onlineUsers } = useOnlineUsersListener();
   const { files } = useFileStore();
   const fileLength = files.map((item) => item.file).length;
   return (
@@ -28,6 +26,7 @@ const ChatContainer = () => {
             user,
             activeConversation.users
           )}
+          callUser={callUser}
         />
         {/* Chat messages */}
         {fileLength > 0 ? (

@@ -8,3 +8,4 @@ declare module "react-video-thumbnail" {
   const VideoThumbnail: React.FC<VideoThumbnailProps>;
   export default VideoThumbnail;
 }
+declare module "global";
